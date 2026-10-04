@@ -52,6 +52,9 @@ All subsequently listed APIs support forwarding headers (including the _X-Forwar
 #### HTTP HEAD Support
 All _GET_ API endpoints also support the HTTP _HEAD_ verb.
 
+#### Headers
+All streaming API responses include a `Content-Duration` header indicating the duration of the media in seconds, incl. subsecond fractions.
+
 ### Audio
 #### HTTP Pseudo-Streaming
 ```
