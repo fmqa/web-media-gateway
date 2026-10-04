@@ -156,7 +156,7 @@ All parameters have the same semantics specified in the corresponding streaming 
 GET /jitter.l16?source=…[&start=…&f=…&target=…&max=…]
 GET /jitter?source=…[&start=…&f=…&target=…&max=…]
 ```
-Helper API for jitter-buffered audio/l16 (RFC2586) streaming, useful for select VoIP applications. This API responds with continuous non-blocking byte stream, with silence insertion being performed in case the source resource does not provide data in time. 
+Helper API for jitter-buffered audio/l16 (RFC2586) streaming, useful for select VoIP applications. This API responds with a continuous non-blocking byte stream, with silence insertion being performed in case the source resource does not provide data in time. 
 
 _source_ must refer to a RFC2586-compatible audio resource.
 
