@@ -57,7 +57,7 @@ public class Consumer {
                 }
             }
         } finally {
-            // Unblock consumer if blocked on buffer.put()
+            // Unblock producer if blocked on buffer.put()
             buffer.clear();
         }
     }
