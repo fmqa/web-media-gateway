@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -45,7 +44,7 @@ public class Mixing {
 
     StreamingResponseBody mix(MediaType content, List<String> format, Announcer announcer, FFBoxedInput[] inlets, Duration start) {
         final var durations = Stream.of(inlets).parallel().map(Mixing::duration).toList();
-        announcer.announce(content, durations.isEmpty() || durations.stream().anyMatch(Objects::isNull) ? null : Collections.max(durations));
+        announcer.announce(content, durations.isEmpty() || durations.contains(null) ? null : Collections.max(durations));
         final var mix = new StringBuilder();
         int index = 0;
         final var filter = new StringBuilder();
