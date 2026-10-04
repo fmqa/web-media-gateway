@@ -26,7 +26,7 @@ For ad-hoc VoIP/Streaming applications, pre-encoding AV media to a persistent st
 
 This gateway provides a solution in the form of a transcoding proxy that sits between the original (lossless/uncompressed) media or streams and the client. Media is transcoded via FFmpeg on the fly to a web-compatible format.
 
-In order to ensure that audio controls via HTML5 media `<audio>` / `video` including navigation remain functional, the gateway provides a [CoD](https://en.wikipedia.org/wiki/Code_on_demand) payload that hooks into a selected media element via MSE, connecting it to the streaming API.
+In order to ensure that audio controls via HTML5 media `<audio>` / `<video>` including navigation remain functional, the gateway provides a [CoD](https://en.wikipedia.org/wiki/Code_on_demand) payload that hooks into a selected media element via MSE, connecting it to the streaming API.
 
 ## Minimal Example / Usage
 
