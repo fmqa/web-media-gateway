@@ -6,7 +6,7 @@ import java.time.Duration;
 import java.util.List;
 
 /**
- * A local or remote media resource that can be used an FFmpeg input.
+ * A local or remote media resource that can be used as an FFmpeg input.
  */
 public interface FFInputable {
     /**
