@@ -83,6 +83,8 @@ Responds with a JavaScript payload that configures the `<audio>` or `<video>` DO
 
 MSE support is required. This uses `audio/mp4; codecs="mp4a.40.2"` as the preferred transmission format.
 
+This API is suitable for usage within a `<script>` tag, e.g. `<script src="/video.mp4.js?selector=%23myAudioElementId&source=…"></script>`.
+
 ### Video
 #### HTTP Pseudo-Streaming
 ```
@@ -110,8 +112,6 @@ GET /video?selector=…&source=…[&start=<iso-8601-duration>&q=<quality>&b=<bit
 Responds with a JavaScript payload that configures the `<video>` or `<video>` DOM element matching _selector_, binding it to the given _source_ via MSE.
 
 MSE support is required. This uses `video/mp4; codecs="avc1.42E01E, mp4a.40.2"` as the preferred transmission format.
-
-This maybe used within a `<script>` tag, e.g. `<script src="/video.mp4.js?selector=%23myAudioElementId&source=…"></script>`.
 
 ## Mixing
 #### HTTP Pseudo-Streaming
