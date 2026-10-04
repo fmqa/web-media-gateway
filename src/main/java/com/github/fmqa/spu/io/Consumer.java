@@ -46,7 +46,7 @@ public class Consumer {
                 if (sleep > 0) {
                     lock.lock();
                     try {
-                        while (sleep > 0 && !(buffer.size() == 1 && buffer.peek() == Producer.EOF)) {
+                        while (sleep > 0 && buffer.peek() != Producer.EOF) {
                             sleep = signal.awaitNanos(sleep);
                         }
                     } catch (InterruptedException e) {
