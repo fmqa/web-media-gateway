@@ -167,7 +167,7 @@ _source_ must refer to a RFC2586-compatible audio resource.
 
 _start (optional)_ is an ISO8601 duration specifier indicating the starting position.
 
-_f (optional)_ represents the length (in milliseconds) of a single buffering window (20 default).
+_f (optional)_ represents the length (in milliseconds) of a single buffering window (20 by default).
 
 _target (optional)_ represents the targeted buffer delay in milliseconds (60 by default).
 
