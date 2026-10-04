@@ -36,11 +36,11 @@ Unlike regular HTML5 media streaming (which relies on byte-range navigation), th
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Media Gateway Demo</title>
+  <title>Media Gateway Demo</title>
 </head>
 <body>
-    <audio id="audioPlayer" controls></audio>
-    <script src="/audio.mp4.js?selector=%23audioPlayer&source=http%3A%2F%2F127.0.0.1%3A8000%2Fmyaudio.wav">
+  <audio id="audioPlayer" controls></audio>
+  <script src="/audio.mp4.js?selector=%23audioPlayer&source=http%3A%2F%2F127.0.0.1%3A8000%2Fmyaudio.wav">
 </script>
 </body>
 </html>
