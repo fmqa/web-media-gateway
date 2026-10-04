@@ -118,7 +118,7 @@ Responds with a JavaScript payload that configures the `<video>` or `<video>` DO
 
 MSE support is required. This uses `video/mp4; codecs="avc1.42E01E, mp4a.40.2"` as the preferred transmission format.
 
-## Mixing
+### Mixing
 #### HTTP Pseudo-Streaming
 ```
 GET /stereo.wav?source=…[&source=…&source=………&start=<iso-8601-duration>&q=<quality>&b=<bitrate>]
