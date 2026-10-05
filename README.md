@@ -24,7 +24,7 @@ Usually, you would place this gateway application behind another high-level gate
 
 For ad-hoc VoIP/Streaming applications, pre-encoding AV media to a persistent storage for later provision as HLS/DASH might not be possible due to space constraints. In this case, it may be preferable to trade the CPU overhead of repeated online encoding for savings in storage space.
 
-This gateway provides a solution in the form of a transcoding proxy that sits between the original (lossless/uncompressed) media or streams and the client. Media is transcoded via FFmpeg on the fly to a web-compatible format.
+This gateway provides a solution in the form of a transcoding proxy that sits between the original (lossless/uncompressed) media and the client. Media is transcoded via FFmpeg on the fly to a web-compatible format.
 
 In order to ensure that audio controls via HTML5 media `<audio>` / `<video>` including navigation remain functional, the gateway provides a [CoD](https://en.wikipedia.org/wiki/Code_on_demand) payload that hooks into a selected media element via MSE, connecting it to the streaming API.
 
