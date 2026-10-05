@@ -33,13 +33,13 @@ public record Streaming(Piper piper) {
     private static final String AUDIO_WAV_TYPE = "audio/x-wav";
     private static final MediaType AUDIO_WAV = MediaType.parseMediaType(AUDIO_WAV_TYPE);
 
-    static Duration orZero(Duration duration) {
-        return duration == null ? Duration.ZERO : duration;
+    static Duration sum(Duration duration, Duration other) {
+        return duration == null ? null : duration.plus(other);
     }
 
     static Duration announce(Announcer announcer, MediaType content, FFInputable source, Duration start) throws IOException, InterruptedException {
         final var delay = Fragments.delay(source.uri());
-        announcer.announce(content, orZero(source.duration()).plus(delay));
+        announcer.announce(content, sum(source.duration(), delay));
         return delay.minus(start == null ? Duration.ZERO : start);
     }
 
