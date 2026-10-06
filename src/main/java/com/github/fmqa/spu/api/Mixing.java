@@ -3,7 +3,6 @@ package com.github.fmqa.spu.api;
 import com.github.fmqa.spu.convert.FFBoxedInput;
 import com.github.fmqa.spu.media.Connectors;
 import com.github.fmqa.spu.media.FFInputable;
-import com.github.fmqa.spu.media.Fragments;
 import com.github.fmqa.spu.support.Announcer;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -45,31 +43,19 @@ public class Mixing {
     StreamingResponseBody mix(MediaType content, List<String> format, Announcer announcer, FFBoxedInput[] inlets, Duration start) {
         final var durations = Stream.of(inlets).parallel().map(Mixing::duration).toList();
         announcer.announce(content, durations.isEmpty() || durations.contains(null) ? null : Collections.max(durations));
-        final var mix = new StringBuilder();
-        int index = 0;
-        final var filter = new StringBuilder();
-        for (int i = 0; i < inlets.length; i++) {
-            if (start != null) {
-                inlets[i] = inlets[i].seek(start);
-            }
-            filter.append(String.format(Locale.ROOT, "[%d:a]", index++));
-            filter.append("aformat=channel_layouts=mono");
-            final var uri = inlets[i].uri();
-            final var gain = Fragments.gain(uri);
-            final var balance = Fragments.balance(uri).orElse(0.5);
-            gain.ifPresent(vol -> filter.append(",volume=").append(vol));
-            filter.append(String.format(Locale.ROOT, ",pan=stereo|c0=%.1f*c0|c1=%.1f*c0", balance, 1 - balance));
-            final var ch = String.format(Locale.ROOT, "[s%d]", i);
-            filter.append(ch).append(';');
-            mix.append(ch);
-        }
-        filter.append(mix).append(String.format(Locale.ROOT, "amix=inputs=%d:normalize=0,alimiter=limit=0.95:asc=1[aout]", inlets.length));
+        final var ffmfb = new FFmMixFilterBuilder();
         final var argv = new ArrayList<String>();
         Collections.addAll(argv, "ffmpeg", "-nostdin", "-vn");
-        for (final var ff : inlets) argv.addAll(ff.ffmpeg(Connectors.REJECT));
+        for (FFBoxedInput inlet : inlets) {
+            if (start != null) {
+                inlet = inlet.seek(start);
+            }
+            ffmfb.add(inlet.uri());
+            argv.addAll(inlet.ffmpeg(Connectors.REJECT));
+        }
         Collections.addAll(
                 argv,
-                "-filter_complex", filter.toString(),
+                "-filter_complex", ffmfb.build(),
                 "-map", "[aout]"
         );
         argv.addAll(format);
