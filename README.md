@@ -11,7 +11,7 @@
 
 Stateless gateway/proxy for on-the-fly transcoding of media resources to web-compatible formats, playable via MSE.
 
-This gateway is primarily designed for VoIP/telephony applications, but remains usable for other media streaming applications.
+This gateway is primarily designed for VoIP/telephony applications, but is also usable for other media streaming applications.
 
 Usually, you would place this gateway application behind another high-level gateway that performs resource routing.
 
