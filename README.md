@@ -116,7 +116,7 @@ GET /video.mp4?selector=…&source=…[&start=<iso-8601-duration>&q=<quality>&b=
 GET /video?selector=…&source=…[&start=<iso-8601-duration>&q=<quality>&b=<bitrate>&preset=<preset>]
 ```
 
-Responds with a JavaScript payload that configures the `<video>` or `<video>` DOM element matching _selector_, binding it to the given _source_ via MSE.
+Responds with a JavaScript payload that configures the `<audio>` or `<video>` DOM element matching _selector_, binding it to the given _source_ via MSE.
 
 MSE support is required. This uses `video/mp4; codecs="avc1.42E01E, mp4a.40.2"` as the preferred transmission format.
 
