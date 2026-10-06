@@ -74,8 +74,7 @@ public class Fragments {
      * @return the delay value if it exists, or {@link Duration#ZERO} otherwise
      */
     public static Duration delay(String fragment) {
-        final var seconds = get(DELAY_PATTERN, fragment, Function.identity()).orElse(Double.NEGATIVE_INFINITY);
-        return Double.isFinite(seconds) ? Durations.fromSeconds(seconds) : Duration.ZERO;
+        return Durations.fromSeconds(get(DELAY_PATTERN, fragment, Function.identity()).orElse(0));
     }
 
     /**
