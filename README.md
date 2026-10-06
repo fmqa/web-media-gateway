@@ -9,7 +9,7 @@
                                                           └─────────────┘
 ```
 
-Stateless gateway/proxy for on-the-fly transcoding of media resources to web-compatible formats, playable via MSE.
+Stateless gateway/proxy for on-the-fly transcoding of media resources to web-compatible formats, playable via [MSE](https://en.wikipedia.org/wiki/Media_Source_Extensions).
 
 This gateway is primarily designed for VoIP/telephony applications, but is also usable for other media streaming applications.
 
@@ -31,6 +31,8 @@ In order to ensure that audio controls via HTML5 media `<audio>` / `<video>` inc
 Unlike regular HTML5 media streaming (which relies on byte-range navigation), the MSE adapter provided by the gateway relies on time-based navigation via a `?start=…` parameter, similar to older HTTP pseudo-streaming solutions.
 
 ## Minimal Example / Usage
+
+The following demo plays the (online-transcoded) audio resource `http://127.0.0.1:8000/myaudio.wav` using an `<audio>` element. The MSE JavaScript payload for the MP4A container is requested via the `<script>` tag, with the DOM element ID `#audioPlayer` passed as a selector to the API to allow the MSE adapter to bind to the element.
 
 ```html
 <!DOCTYPE html>
