@@ -1,5 +1,6 @@
 package com.github.fmqa.spu.media.ffmpeg;
 
+import com.github.fmqa.spu.media.common.Connector;
 import com.github.fmqa.spu.media.common.Opener;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +12,7 @@ import java.io.InputStream;
  * {@link InputStream} to the FFmpeg process' standard input ({@link Process#getOutputStream()}).
  * @see Process
  */
-public class StandardInputConnector implements Connector {
+public class FFStandardInputConnector implements Connector {
     private static final String FF_STDIN = "pipe:0";
 
     private Opener action;

@@ -2,8 +2,8 @@ package com.github.fmqa.spu.convert;
 
 import com.github.fmqa.spu.api.Streaming;
 import com.github.fmqa.spu.io.Loopback;
-import com.github.fmqa.spu.media.ffmpeg.ConnectionRejectedException;
-import com.github.fmqa.spu.media.ffmpeg.Connectors;
+import com.github.fmqa.spu.media.common.ConnectionRejectedException;
+import com.github.fmqa.spu.media.common.Connectors;
 import com.github.fmqa.spu.media.ffmpeg.FFInputable;
 import com.github.fmqa.spu.media.ffmpeg.FFPseudoStreamInput;
 import com.github.fmqa.spu.media.Fragments;

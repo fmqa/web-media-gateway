@@ -1,5 +1,7 @@
 package com.github.fmqa.spu.media.ffmpeg;
 
+import com.github.fmqa.spu.media.common.Connector;
+
 import java.io.IOException;
 import java.net.URI;
 import java.time.Duration;

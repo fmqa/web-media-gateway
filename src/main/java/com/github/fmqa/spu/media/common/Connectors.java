@@ -1,6 +1,4 @@
-package com.github.fmqa.spu.media.ffmpeg;
-
-import com.github.fmqa.spu.media.common.Opener;
+package com.github.fmqa.spu.media.common;
 
 /**
  * Predefined connector implementations.

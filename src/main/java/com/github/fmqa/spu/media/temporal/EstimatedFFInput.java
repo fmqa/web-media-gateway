@@ -1,6 +1,6 @@
 package com.github.fmqa.spu.media.temporal;
 
-import com.github.fmqa.spu.media.ffmpeg.Connector;
+import com.github.fmqa.spu.media.common.Connector;
 import com.github.fmqa.spu.media.ffmpeg.FFInputable;
 import java.io.IOException;
 import java.net.URI;

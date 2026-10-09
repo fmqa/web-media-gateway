@@ -1,5 +1,6 @@
 package com.github.fmqa.spu.media.ffmpeg;
 
+import com.github.fmqa.spu.media.common.Connector;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;

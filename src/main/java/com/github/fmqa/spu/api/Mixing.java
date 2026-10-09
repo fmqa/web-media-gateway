@@ -1,7 +1,7 @@
 package com.github.fmqa.spu.api;
 
 import com.github.fmqa.spu.convert.FFBoxedInput;
-import com.github.fmqa.spu.media.ffmpeg.Connectors;
+import com.github.fmqa.spu.media.common.Connectors;
 import com.github.fmqa.spu.media.ffmpeg.FFInputable;
 import com.github.fmqa.spu.support.Announcer;
 import org.springframework.http.MediaType;

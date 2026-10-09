@@ -4,7 +4,7 @@ import com.github.fmqa.spu.io.Piper;
 import com.github.fmqa.spu.media.ffmpeg.FFInputable;
 import com.github.fmqa.spu.media.ffmpeg.FFRanges;
 import com.github.fmqa.spu.media.Fragments;
-import com.github.fmqa.spu.media.ffmpeg.StandardInputConnector;
+import com.github.fmqa.spu.media.ffmpeg.FFStandardInputConnector;
 import com.github.fmqa.spu.support.Announcer;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -43,7 +43,7 @@ public record Streaming(Piper piper) {
         return delay.minus(start == null ? Duration.ZERO : start);
     }
 
-    StreamingResponseBody process(StandardInputConnector connector, List<String> argv) {
+    StreamingResponseBody process(FFStandardInputConnector connector, List<String> argv) {
         final var builder = new ProcessBuilder(argv);
         builder.redirectError(ProcessBuilder.Redirect.DISCARD);
         return dst -> {
@@ -62,7 +62,7 @@ public record Streaming(Piper piper) {
         final var ff = start == null || start.isZero() ? source : source.seek(start);
         final var argv = new ArrayList<String>();
         Collections.addAll(argv, "ffmpeg", "-nostdin", "-vn");
-        final var connector = new StandardInputConnector();
+        final var connector = new FFStandardInputConnector();
         argv.addAll(ff.ffmpeg(connector));
         final var filters = new ArrayList<String>();
         if (delay.isPositive()) {
@@ -166,7 +166,7 @@ public record Streaming(Piper piper) {
         final var ff = start == null ? source : source.seek(start);
         final var argv = new ArrayList<String>();
         Collections.addAll(argv, "ffmpeg", "-nostdin");
-        final var connector = new StandardInputConnector();
+        final var connector = new FFStandardInputConnector();
         argv.addAll(ff.ffmpeg(connector));
         Collections.addAll(argv, "-profile:v", "baseline", "-pix_fmt", "yuv420p", "-c:a", "aac");
         if (b != null) {

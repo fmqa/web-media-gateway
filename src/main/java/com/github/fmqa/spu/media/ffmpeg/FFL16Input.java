@@ -1,5 +1,6 @@
 package com.github.fmqa.spu.media.ffmpeg;
 
+import com.github.fmqa.spu.media.common.Connector;
 import com.github.fmqa.spu.media.pcm.L16HTTPResource;
 
 import java.io.IOException;

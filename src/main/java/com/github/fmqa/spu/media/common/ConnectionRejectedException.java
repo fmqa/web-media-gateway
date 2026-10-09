@@ -1,4 +1,6 @@
-package com.github.fmqa.spu.media.ffmpeg;
+package com.github.fmqa.spu.media.common;
+
+import com.github.fmqa.spu.media.ffmpeg.FFInputable;
 
 /**
  * Thrown when an FFmpeg connection is refused.

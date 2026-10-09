@@ -98,7 +98,7 @@ public enum Estimators implements Estimator {
      * {@link FFInputable#duration()} returns {@code null}.
      * @param input the input to wrap
      * @param estimator the estimator to use a fallback for duration estimator
-     * @return a media object which may fallsback onto the given duration estimator
+     * @return a media object which may fall back onto the given duration estimator
      */
     public static FFInputable wrap(FFInputable input, Estimator estimator) {
         return new EstimatedFFInput(input, estimator);
