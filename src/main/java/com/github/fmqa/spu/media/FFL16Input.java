@@ -39,7 +39,7 @@ public record FFL16Input(L16HTTPResource resource) implements FFInputable {
     }
 
     @Override
-    public Duration duration() {
+    public Duration duration() throws IOException, InterruptedException {
         return resource.duration();
     }
 }

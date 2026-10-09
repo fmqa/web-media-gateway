@@ -2,9 +2,10 @@ package com.github.fmqa.spu.convert;
 
 import com.github.fmqa.spu.media.FFInputable;
 import com.github.fmqa.spu.media.FFL16Input;
-import com.github.fmqa.spu.media.FFProbedURLInput;
 import com.github.fmqa.spu.media.FFPseudoStreamInput;
 import com.github.fmqa.spu.media.FFURLInput;
+import com.github.fmqa.spu.media.temporal.Estimator;
+import com.github.fmqa.spu.media.temporal.Estimators;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,7 +20,7 @@ import java.net.http.HttpClient;
  * @param client The client used to probe/query input URIs.
  */
 @Component
-public record FFInputConverter(HttpClient client) implements Converter<URI, FFInputable> {
+public record FFInputConverter(HttpClient client, Estimator estimator) implements Converter<URI, FFInputable> {
     static boolean isPseudoStream(URI uri) {
         final var builder = UriComponentsBuilder.fromUri(uri);
         final var components = builder.build();
@@ -27,8 +28,8 @@ public record FFInputConverter(HttpClient client) implements Converter<URI, FFIn
         return query.containsKey("start");
     }
 
-    FFProbedURLInput probed(FFInputable inputable) {
-        return new FFProbedURLInput(client, inputable);
+    FFInputable probed(FFInputable inputable) {
+        return Estimators.wrap(inputable, estimator);
     }
 
     static boolean isSupported(URI uri) {

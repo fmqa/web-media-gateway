@@ -5,9 +5,10 @@ import com.github.fmqa.spu.io.Loopback;
 import com.github.fmqa.spu.media.ConnectionRejectedException;
 import com.github.fmqa.spu.media.Connectors;
 import com.github.fmqa.spu.media.FFInputable;
-import com.github.fmqa.spu.media.FFProbedURLInput;
 import com.github.fmqa.spu.media.FFPseudoStreamInput;
 import com.github.fmqa.spu.media.Fragments;
+import com.github.fmqa.spu.media.temporal.Estimator;
+import com.github.fmqa.spu.media.temporal.Estimators;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,7 @@ import java.net.http.HttpClient;
  * running server application itself.
  */
 @Component
-public record FFBoxedInputConverter(HttpClient client, FFInputConverter converter, @Lazy Loopback lo) implements Converter<URI, FFBoxedInput> {
+public record FFBoxedInputConverter(HttpClient client, FFInputConverter converter, Estimator estimator, @Lazy Loopback lo) implements Converter<URI, FFBoxedInput> {
     URI wav(URI uri) {
         return MvcUriComponentsBuilder
                 .fromController(UriComponentsBuilder.fromUri(lo.uri()), Streaming.class)
@@ -41,8 +42,8 @@ public record FFBoxedInputConverter(HttpClient client, FFInputConverter converte
         return new FFPseudoStreamInput(wav(uri));
     }
 
-    FFProbedURLInput probed(URI uri) {
-        return new FFProbedURLInput(client, pseudo(uri));
+    FFInputable probed(URI uri) {
+        return Estimators.wrap(pseudo(uri), estimator);
     }
 
     static boolean hinted(URI uri) {
