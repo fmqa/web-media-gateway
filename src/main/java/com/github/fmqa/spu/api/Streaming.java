@@ -1,10 +1,10 @@
 package com.github.fmqa.spu.api;
 
 import com.github.fmqa.spu.io.Piper;
-import com.github.fmqa.spu.media.FFInputable;
-import com.github.fmqa.spu.media.FFRanges;
+import com.github.fmqa.spu.media.ffmpeg.FFInputable;
+import com.github.fmqa.spu.media.ffmpeg.FFRanges;
 import com.github.fmqa.spu.media.Fragments;
-import com.github.fmqa.spu.media.StandardInputConnector;
+import com.github.fmqa.spu.media.ffmpeg.StandardInputConnector;
 import com.github.fmqa.spu.support.Announcer;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

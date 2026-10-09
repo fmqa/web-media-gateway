@@ -1,4 +1,4 @@
-package com.github.fmqa.spu.media;
+package com.github.fmqa.spu.media.common;
 
 import java.util.Locale;
 import java.util.Objects;

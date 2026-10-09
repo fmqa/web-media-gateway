@@ -1,9 +1,9 @@
 package com.github.fmqa.spu.convert;
 
-import com.github.fmqa.spu.media.FFInputable;
-import com.github.fmqa.spu.media.FFL16Input;
-import com.github.fmqa.spu.media.FFPseudoStreamInput;
-import com.github.fmqa.spu.media.FFURLInput;
+import com.github.fmqa.spu.media.ffmpeg.FFInputable;
+import com.github.fmqa.spu.media.ffmpeg.FFL16Input;
+import com.github.fmqa.spu.media.ffmpeg.FFPseudoStreamInput;
+import com.github.fmqa.spu.media.ffmpeg.FFURLInput;
 import com.github.fmqa.spu.media.temporal.Estimator;
 import com.github.fmqa.spu.media.temporal.Estimators;
 import org.springframework.core.convert.converter.Converter;

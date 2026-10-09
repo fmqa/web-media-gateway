@@ -1,4 +1,6 @@
-package com.github.fmqa.spu.media;
+package com.github.fmqa.spu.media.ffmpeg;
+
+import com.github.fmqa.spu.media.common.Opener;
 
 /**
  * Connects an {@link java.io.InputStream} supplied by an {@link Opener} to a reifiable resource identifier

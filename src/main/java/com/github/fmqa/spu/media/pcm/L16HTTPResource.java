@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
-import java.net.http.HttpResponse;
 import java.time.Duration;
+
+import static java.net.http.HttpResponse.BodyHandlers;
 
 /**
  * An I/O wrapper for {@link L16Resource}, providing the capability to read audio/l16 resource data.
@@ -85,7 +86,7 @@ public record L16HTTPResource(HttpClient client, L16Resource resource) {
      * @throws InterruptedException If the opening process was interrupted
      */
     public InputStream open() throws IOException, InterruptedException {
-        final var response = client.send(resource.request(), HttpResponse.BodyHandlers.ofInputStream());
+        final var response = client.send(resource.request(), BodyHandlers.ofInputStream());
         if (response.statusCode() != 200 && response.statusCode() != 206) {
             return null;
         }

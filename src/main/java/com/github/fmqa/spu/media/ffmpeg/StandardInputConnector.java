@@ -1,5 +1,6 @@
-package com.github.fmqa.spu.media;
+package com.github.fmqa.spu.media.ffmpeg;
 
+import com.github.fmqa.spu.media.common.Opener;
 import java.io.IOException;
 import java.io.InputStream;
 

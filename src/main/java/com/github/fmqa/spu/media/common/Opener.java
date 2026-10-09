@@ -1,4 +1,4 @@
-package com.github.fmqa.spu.media;
+package com.github.fmqa.spu.media.common;
 
 import java.io.IOException;
 import java.io.InputStream;

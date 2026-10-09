@@ -1,4 +1,4 @@
-package com.github.fmqa.spu.media;
+package com.github.fmqa.spu.media.ffmpeg;
 
 import com.github.fmqa.spu.media.pcm.L16HTTPResource;
 

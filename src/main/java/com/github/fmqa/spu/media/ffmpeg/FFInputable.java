@@ -1,4 +1,4 @@
-package com.github.fmqa.spu.media;
+package com.github.fmqa.spu.media.ffmpeg;
 
 import java.io.IOException;
 import java.net.URI;

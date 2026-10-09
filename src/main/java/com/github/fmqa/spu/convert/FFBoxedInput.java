@@ -1,7 +1,7 @@
 package com.github.fmqa.spu.convert;
 
-import com.github.fmqa.spu.media.Connector;
-import com.github.fmqa.spu.media.FFInputable;
+import com.github.fmqa.spu.media.ffmpeg.Connector;
+import com.github.fmqa.spu.media.ffmpeg.FFInputable;
 
 import java.io.IOException;
 import java.net.URI;

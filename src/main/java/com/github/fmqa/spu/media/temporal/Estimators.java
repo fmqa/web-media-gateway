@@ -1,6 +1,6 @@
 package com.github.fmqa.spu.media.temporal;
 
-import com.github.fmqa.spu.media.FFInputable;
+import com.github.fmqa.spu.media.ffmpeg.FFInputable;
 import com.github.fmqa.spu.units.Durations;
 import java.io.IOException;
 import java.io.UncheckedIOException;

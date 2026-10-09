@@ -1,6 +1,6 @@
 package com.github.fmqa.spu.convert;
 
-import com.github.fmqa.spu.media.FFInputable;
+import com.github.fmqa.spu.media.ffmpeg.FFInputable;
 import com.github.fmqa.spu.media.pcm.L16HTTPResource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

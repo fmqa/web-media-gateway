@@ -1,4 +1,4 @@
-package com.github.fmqa.spu.media;
+package com.github.fmqa.spu.media.ffmpeg;
 
 /**
  * Thrown when an FFmpeg connection is refused.

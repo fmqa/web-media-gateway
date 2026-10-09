@@ -1,6 +1,6 @@
 package com.github.fmqa.spu.media.pcm;
 
-import com.github.fmqa.spu.media.ContentRange;
+import com.github.fmqa.spu.media.common.ContentRange;
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
