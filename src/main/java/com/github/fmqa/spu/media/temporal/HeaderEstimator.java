@@ -9,7 +9,13 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.Optional;
 
-record ContentDurationHeaderEstimator(HttpClient client) implements Estimator {
+/**
+ * Uses the given HTTP client to query a given media resource's duration using HTTP header metadata.
+ * <p></p>
+ * This attempts to parse a {@code Content-Duration} header if available.
+ * @param client the HTTP client to use for the query
+ */
+public record HeaderEstimator(HttpClient client) implements Estimator {
     private static final String DURATION_HEADER = "Content-Duration";
     
     private static Optional<Double> parse(String value) {
@@ -34,7 +40,7 @@ record ContentDurationHeaderEstimator(HttpClient client) implements Estimator {
         if (response.statusCode() != 200 && response.statusCode() != 206) {
             return null;
         }
-        final var value = response.headers().firstValue(DURATION_HEADER).flatMap(ContentDurationHeaderEstimator::parse).map(Durations::fromSeconds);
+        final var value = response.headers().firstValue(DURATION_HEADER).flatMap(HeaderEstimator::parse).map(Durations::fromSeconds);
         return value.orElse(null);
     }
 

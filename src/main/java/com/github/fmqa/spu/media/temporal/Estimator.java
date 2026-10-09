@@ -5,7 +5,7 @@ import java.net.URI;
 import java.time.Duration;
 
 /**
- * Estimates durations of media resources.
+ * Estimates the duration of media resources.
  */
 @FunctionalInterface
 public interface Estimator {
