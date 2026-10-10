@@ -32,7 +32,7 @@ public record Jitter(JitterBuffer jitter) {
         return dst -> {
             try (final var in = resource.open()) {
                 jitter.copy(
-                        2 * format.rate() * format.channels(),
+                        (int) format.bytes(Duration.ofSeconds(1)),
                         Duration.ofMillis(f == null || f <= 0 ? 20 : f),
                         Duration.ofMillis(target == null || target <= 0 ? 60 : target),
                         Duration.ofMillis(max == null || max <= 0 ? 200 : max),
