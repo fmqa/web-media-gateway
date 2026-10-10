@@ -3,6 +3,7 @@ package com.github.fmqa.spu.api;
 import com.github.fmqa.spu.av.Bitrate;
 import com.github.fmqa.spu.av.M4AMixStreamBuilder;
 import com.github.fmqa.spu.av.MP3MixStreamBuilder;
+import com.github.fmqa.spu.av.Monitorable;
 import com.github.fmqa.spu.av.Quality;
 import com.github.fmqa.spu.av.WavMixStreamBuilder;
 import com.github.fmqa.spu.convert.FFBoxedInput;
@@ -18,6 +19,8 @@ import java.net.URI;
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectFactory;
 
 /**
@@ -27,11 +30,14 @@ import org.springframework.beans.factory.ObjectFactory;
 public record Mixing(
     ObjectFactory<WavMixStreamBuilder> wavFactory,
     ObjectFactory<MP3MixStreamBuilder> mp3Factory,
-    ObjectFactory<M4AMixStreamBuilder> m4aFactory)
+    ObjectFactory<M4AMixStreamBuilder> m4aFactory) implements Monitorable
 {
+    private static final Logger log = LoggerFactory.getLogger(Mixing.class);
+    
     @GetMapping(value = "/stereo.wav", produces = WavMixStreamBuilder.AUDIO_WAV_TYPE)
     public StreamingResponseBody wav(Announcer announcer, @RequestParam List<FFBoxedInput> source, @RequestParam(required = false) Duration start) {
         final WavMixStreamBuilder builder = wavFactory.getObject();
+        builder.monitor(this);
         builder.sources(source, start);
         return builder.build(announcer);
     }
@@ -45,6 +51,7 @@ public record Mixing(
             @RequestParam(required = false) Duration start) 
     {
         final MP3MixStreamBuilder builder = mp3Factory.getObject();
+        builder.monitor(this);
         builder.sources(source, start);
         builder.quality(q);
         builder.bitrate(b);
@@ -60,6 +67,7 @@ public record Mixing(
             @RequestParam(required = false) Duration start)
     {
         final M4AMixStreamBuilder builder = m4aFactory.getObject();
+        builder.monitor(this);
         builder.sources(source, start);
         builder.quality(q);
         builder.bitrate(b);
@@ -84,5 +92,15 @@ public record Mixing(
         model.addAttribute("elementSelector", selector);
         model.addAttribute("mediatype", M4AMixStreamBuilder.AUDIO_MP4.toString());
         return "streaming.js";
+    }
+    
+    @Override
+    public void started(long pid, List<String> argv) {
+        log.info("FFmpeg ({}) started with arguments: {}", pid, String.join(" ", argv));
+    }
+
+    @Override
+    public void exited(long pid, int code) {
+        log.info("FFmpeg ({}) exited with {}", pid, code);
     }
 }

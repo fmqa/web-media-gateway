@@ -21,6 +21,7 @@ abstract class AbstractMediaStreamBuilder {
     private Duration delay = Duration.ZERO;
     private Duration start = Duration.ZERO;
     private List<Range> ranges = Collections.emptyList();
+    private Monitorable monitor;
     
     public void input(FFInputable input) {
         source = input;
@@ -80,9 +81,27 @@ abstract class AbstractMediaStreamBuilder {
         return sink(argv);
     }
     
+    public void monitor(Monitorable monitorable) {
+        monitor = monitorable;
+    }
+    
+    protected void started(long pid, List<String> args) {
+        if (monitor != null) {
+            monitor.started(pid, args);
+        }
+    }
+    
+    protected void exited(long pid, int code) {
+        if (monitor != null) {
+            monitor.exited(pid, code);
+        }
+    }
+    
     protected StreamingResponseBody body(ProcessBuilder builder, FFStandardInputConnector connector, Piper piper) {
         return dst -> {
             try (final var ffmpeg = builder.start()) {
+                ffmpeg.onExit().thenAccept(process -> exited(process.pid(), process.exitValue()));
+                started(ffmpeg.pid(), builder.command());
                 piper.pipe(connector.open(), ffmpeg.getOutputStream(), ffmpeg.getInputStream(), dst);
             } catch (InterruptedException _) {
             }
