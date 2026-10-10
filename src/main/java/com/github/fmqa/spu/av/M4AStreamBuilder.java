@@ -34,6 +34,12 @@ public class M4AStreamBuilder extends AbstractMediaStreamBuilder {
         bitrate = b;
         return this;
     }
+    
+    @Override
+    protected void ffmpeg(List<String> argv) {
+        super.ffmpeg(argv);
+        argv.add("-vn");
+    }
 
     @Override
     protected MediaType sink(List<String> argv) {

@@ -40,7 +40,7 @@ abstract class AbstractMediaStreamBuilder {
     }
     
     protected void ffmpeg(List<String> argv) {
-        Collections.addAll(argv, "ffmpeg", "-nostdin", "-vn");
+        Collections.addAll(argv, "ffmpeg", "-nostdin");
     }
     
     protected void source(List<String> argv, Connector connector) {

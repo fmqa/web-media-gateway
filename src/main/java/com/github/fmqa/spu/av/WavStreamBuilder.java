@@ -24,6 +24,12 @@ public class WavStreamBuilder extends AbstractMediaStreamBuilder {
     }
     
     @Override
+    protected void ffmpeg(List<String> argv) {
+        super.ffmpeg(argv);
+        argv.add("-vn");
+    }
+    
+    @Override
     protected MediaType sink(List<String> argv) {
         Collections.addAll(argv, "-f", "wav");
         return AUDIO_WAV;
