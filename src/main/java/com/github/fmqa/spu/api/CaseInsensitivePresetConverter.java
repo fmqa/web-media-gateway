@@ -1,5 +1,6 @@
 package com.github.fmqa.spu.api;
 
+import com.github.fmqa.spu.av.Preset;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

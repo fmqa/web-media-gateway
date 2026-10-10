@@ -1,4 +1,4 @@
-package com.github.fmqa.spu.api;
+package com.github.fmqa.spu.av;
 
 /**
  * Quality scale (0..9), where 0 is best/highest quality, and 9 is lowest quality.

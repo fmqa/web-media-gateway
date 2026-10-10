@@ -1,5 +1,7 @@
 package com.github.fmqa.spu.api;
 
+import com.github.fmqa.spu.av.Bitrate;
+import com.github.fmqa.spu.av.Quality;
 import com.github.fmqa.spu.convert.FFBoxedInput;
 import com.github.fmqa.spu.media.common.Connectors;
 import com.github.fmqa.spu.media.ffmpeg.FFInputable;

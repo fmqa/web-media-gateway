@@ -52,6 +52,8 @@ public record FFInputConverter(HttpClient client, Estimator estimator) implement
             throw new UncheckedIOException(e);
         } catch (InterruptedException e) {
             throw new IllegalArgumentException(e);
+        } catch (IllegalArgumentException _) {
+            return probed(new FFURLInput(uri));
         }
         if (l16 != null) {
             return l16;
