@@ -1,4 +1,4 @@
-package com.github.fmqa.spu.api;
+package com.github.fmqa.spu.av;
 
 import org.junit.jupiter.api.Test;
 

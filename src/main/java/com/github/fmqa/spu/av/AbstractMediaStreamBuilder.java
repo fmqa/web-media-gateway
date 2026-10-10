@@ -24,11 +24,12 @@ abstract class AbstractMediaStreamBuilder {
     
     public void input(FFInputable input) {
         source = input;
+        start = Duration.ZERO;
     }
     
     public void input(FFInputable input, Duration at) {
         source = input;
-        start = at;
+        start = at == null ? Duration.ZERO : at;
     }
     
     public void delay(Duration by) {
