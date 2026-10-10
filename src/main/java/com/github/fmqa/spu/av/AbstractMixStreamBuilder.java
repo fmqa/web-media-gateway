@@ -90,10 +90,14 @@ abstract class AbstractMixStreamBuilder {
         }
     }
     
+    private void exited(Process process) {
+        exited(process.pid(), process.exitValue());
+    }
+    
     protected StreamingResponseBody body(ProcessBuilder builder) {
         return dst -> {
             try (final var ffmpeg = builder.start(); final var out = ffmpeg.getInputStream(); final var in = ffmpeg.getOutputStream()) {
-                ffmpeg.onExit().thenAccept(process -> exited(process.pid(), process.exitValue()));
+                ffmpeg.onExit().thenAccept(this::exited);
                 started(ffmpeg.pid(), builder.command());
                 in.close();
                 out.transferTo(dst);

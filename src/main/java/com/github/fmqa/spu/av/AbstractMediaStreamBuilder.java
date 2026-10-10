@@ -97,10 +97,14 @@ abstract class AbstractMediaStreamBuilder {
         }
     }
     
+    private void exited(Process process) {
+        exited(process.pid(), process.exitValue());
+    }
+    
     protected StreamingResponseBody body(ProcessBuilder builder, FFStandardInputConnector connector, Piper piper) {
         return dst -> {
             try (final var ffmpeg = builder.start()) {
-                ffmpeg.onExit().thenAccept(process -> exited(process.pid(), process.exitValue()));
+                ffmpeg.onExit().thenAccept(this::exited);
                 started(ffmpeg.pid(), builder.command());
                 piper.pipe(connector.open(), ffmpeg.getOutputStream(), ffmpeg.getInputStream(), dst);
             } catch (InterruptedException _) {
