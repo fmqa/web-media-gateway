@@ -28,8 +28,8 @@ public record FFL16Input(L16HTTPResource resource) implements FFInputable {
     public List<String> ffmpeg(Connector connector) {
         return List.of(
                 "-f", "s16be",
-                "-ar", Integer.toString(resource.rate()),
-                "-ac", Integer.toString(resource.channels()),
+                "-ar", Integer.toString(resource.format().rate()),
+                "-ac", Integer.toString(resource.format().channels()),
                 "-i", connector.connect(resource::open)
         );
     }

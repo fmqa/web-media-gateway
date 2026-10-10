@@ -15,24 +15,11 @@ import static java.net.http.HttpResponse.BodyHandlers;
 
 /**
  * RFC2586 (audio/l16) audio resource.
- * @param request Request used to fetch the audio resource
- * @param rate The sampling rate of the audio signal
- * @param channels The number of audio channels
- * @param bytes The resource's length in bytes, or {@code -1} if undefined/indeterminate
+ * @param request request used to fetch the audio resource
+ * @param format the audio format
+ * @param bytes the resource's length in bytes, or {@code -1} if undefined/indeterminate
  */
-public record L16Resource(HttpRequest request, int rate, int channels, long bytes) {
-    private static final MediaType AUDIO_L16 = new MediaType("audio", "l16");
-
-    private static int rateOf(MediaType arg) {
-        final var rate = arg.getParameter("rate");
-        return rate == null ? 8000 : Integer.parseInt(rate);
-    }
-
-    private static int channelsOf(MediaType arg) {
-        final var rate = arg.getParameter("channels");
-        return rate == null ? 1 : Integer.parseInt(rate);
-    }
-
+public record L16Resource(HttpRequest request, L16Format format, long bytes) {
     private static HttpRequest get(URI uri, long start) {
         return HttpRequest
                 .newBuilder(uri)
@@ -60,8 +47,8 @@ public record L16Resource(HttpRequest request, int rate, int channels, long byte
             return null;
         }
 
-        final var contentType = response.headers().firstValue("Content-Type").map(MediaType::parseMediaType).orElse(null);
-        if (contentType == null || !AUDIO_L16.isCompatibleWith(contentType)) {
+        final var format = response.headers().firstValue("Content-Type").map(L16Format::from).orElse(null);
+        if (format == null) {
             return null;
         }
 
@@ -79,7 +66,7 @@ public record L16Resource(HttpRequest request, int rate, int channels, long byte
                     .orElse(-1L);
         }
 
-        return new L16Resource(get(uri), rateOf(contentType), channelsOf(contentType), length);
+        return new L16Resource(get(uri), format, length);
     }
 
     /**
@@ -91,10 +78,7 @@ public record L16Resource(HttpRequest request, int rate, int channels, long byte
      * audio/l16
      */
     public static L16Resource from(URI uri, MediaType contentType, long bytes) {
-        if (contentType == null || !AUDIO_L16.isCompatibleWith(contentType)) {
-            return null;
-        }
-        return new L16Resource(get(uri), rateOf(contentType), channelsOf(contentType), bytes);
+        return new L16Resource(get(uri), L16Format.from(contentType), bytes);
     }
 
     /**
@@ -119,11 +103,7 @@ public record L16Resource(HttpRequest request, int rate, int channels, long byte
      * @return A new audio/l16 resource starting from the given start position
      */
     public L16Resource seek(Duration start) {
-        final var full = start.toSeconds() * rate;
-        final var part = ((double) start.toNanosPart() / 1.0e9) * (double) rate;
-        final var frames = full + (long) part;
-        final var offset = 2 * channels * frames;
-        return seek(offset);
+        return seek(format.bytes(start));
     }
 
     /**
@@ -132,7 +112,7 @@ public record L16Resource(HttpRequest request, int rate, int channels, long byte
      * @return A new audio/l16 resource starting from the given byte offset
      */
     public L16Resource seek(long start) {
-        return new L16Resource(get(request.uri(), start), rate, channels, bytes);
+        return new L16Resource(get(request.uri(), start), format, bytes);
     }
 
     /**
@@ -140,13 +120,6 @@ public record L16Resource(HttpRequest request, int rate, int channels, long byte
      * @return The duration of the resource, or {@code null} if the duration can't be determined
      */
     public Duration duration() {
-        if (bytes < 0) {
-            return null;
-        }
-        final var bps = 2 * rate * channels;
-        final var s = bytes / (double) bps;
-        final var whole = (long) s;
-        final var frac = (s - whole) * 1e9;
-        return Duration.ofSeconds(whole, (long) frac);
+        return bytes < 0 ? null : format.duration(bytes);
     }
 }

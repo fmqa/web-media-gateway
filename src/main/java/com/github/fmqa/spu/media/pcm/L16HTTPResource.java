@@ -35,19 +35,11 @@ public record L16HTTPResource(HttpClient client, L16Resource resource) {
     }
 
     /**
-     * Returns the number of audio channels.
-     * @see L16Resource#channels()
+     * Returns the audio format.
+     * @see L16Resource#format()
      */
-    public int channels() {
-        return resource.channels();
-    }
-
-    /**
-     * Returns the audio sampling rate of this resource.
-     * @see L16Resource#rate()
-     */
-    public int rate() {
-        return resource.rate();
+    public L16Format format() {
+        return resource.format();
     }
 
     /**
