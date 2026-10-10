@@ -40,7 +40,7 @@ public record FFInputConverter(HttpClient client, Estimator estimator) implement
     @Override
     public FFInputable convert(URI uri) {
         if (!isSupported(uri)) {
-            return new FFURLInput(uri, null);
+            return new FFURLInput(uri);
         }
         if (isPseudoStream(uri)) {
             return probed(new FFPseudoStreamInput(uri));
@@ -56,6 +56,6 @@ public record FFInputConverter(HttpClient client, Estimator estimator) implement
         if (l16 != null) {
             return l16;
         }
-        return probed(new FFURLInput(uri, null));
+        return probed(new FFURLInput(uri));
     }
 }

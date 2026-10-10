@@ -13,6 +13,10 @@ import java.util.List;
  * @param start The (temporal) position to start processing the resource from
  */
 public record FFURLInput(URI uri, Duration start) implements FFInputable {
+    public FFURLInput(URI uri) {
+        this(uri, null);
+    }
+
     private URI clean() {
         return UriComponentsBuilder.fromUri(uri).fragment(null).build(true).toUri();
     }
