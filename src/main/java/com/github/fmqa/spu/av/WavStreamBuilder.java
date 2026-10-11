@@ -26,7 +26,7 @@ public class WavStreamBuilder extends AbstractMediaStreamBuilder {
     @Override
     protected void source(List<String> argv, List<String> argn) {
         argv.add("-vn");
-        super.ffmpeg(argv);
+        super.source(argv, argn);
     }
     
     @Override
