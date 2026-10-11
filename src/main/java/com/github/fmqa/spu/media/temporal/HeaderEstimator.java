@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import static java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
 import java.util.Optional;
 
@@ -33,7 +33,7 @@ public record HeaderEstimator(HttpClient client) implements Estimator {
                 .method(method, HttpRequest.BodyPublishers.noBody())
                 .build();
 
-        final var response = client.send(request, HttpResponse.BodyHandlers.discarding());
+        final var response = client.send(request, BodyHandlers.discarding());
         if (response.statusCode() == 405 && "HEAD".equals(method)) {
             return header("GET", uri);
         }
