@@ -22,6 +22,16 @@ public class L16FormatTest {
     }
     
     @Test
+    public void testContentMediaType() {
+        final L16Format format = new L16Format(16000, 2);
+        final MediaType content = format.content();
+        assertEquals("audio", content.getType());
+        assertEquals("l16", content.getSubtype());
+        assertEquals("16000", content.getParameter("rate"));
+        assertEquals("2", content.getParameter("channels"));
+    }
+    
+    @Test
     public void testInvalidFormat() {
         assertThrows(InvalidL16FormatException.class, () -> new L16Format(8000, -1));
         assertThrows(InvalidL16FormatException.class, () -> new L16Format(8000, 0));
