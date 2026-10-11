@@ -45,9 +45,13 @@ abstract class AbstractMediaStreamBuilder {
         Collections.addAll(argv, "ffmpeg", "-nostdin");
     }
     
+    protected void source(List<String> argv, List<String> argn) {
+        argv.addAll(argn);
+    }
+    
     protected void source(List<String> argv, Connector connector) {
         final Duration from = start.minus(delay);
-        argv.addAll(from.isPositive() ? source.seek(from).ffmpeg(connector) : source.ffmpeg(connector));
+        source(argv, from.isPositive() ? source.seek(from).ffmpeg(connector) : source.ffmpeg(connector));
     }
     
     protected void delay(List<String> filters) {

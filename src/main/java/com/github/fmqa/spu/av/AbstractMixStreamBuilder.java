@@ -40,7 +40,7 @@ abstract class AbstractMixStreamBuilder {
     }
     
     protected void ffmpeg(List<String> argv) {
-        Collections.addAll(argv, "ffmpeg", "-nostdin", "-vn");
+        Collections.addAll(argv, "ffmpeg", "-nostdin");
     }
     
     protected Duration duration() {
@@ -52,11 +52,16 @@ abstract class AbstractMixStreamBuilder {
             .orElse(null);
     }
     
+    protected void source(List<String> argv, List<String> argn) {
+        argv.add("-vn");
+        argv.addAll(argn);
+    }
+    
     void inputs(List<String> argv, FFmMixFilterBuilder mix) {
         for (FFInputable in : sources) {
             mix.add(in.uri());
             in = in.seek(start);
-            argv.addAll(in.ffmpeg(Connectors.REJECT));
+            source(argv, in.ffmpeg(Connectors.REJECT));
         }
     }
     
