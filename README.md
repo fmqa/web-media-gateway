@@ -42,7 +42,7 @@ The following demo plays the (online-transcoded) audio resource `http://127.0.0.
 </head>
 <body>
   <audio id="audioPlayer" controls></audio>
-  <script src="/audio.mp4.js?selector=%23audioPlayer&source=http%3A%2F%2F127.0.0.1%3A8000%2Fmyaudio.wav">
+  <script src="/audio.mp4a.js?selector=%23audioPlayer&source=http%3A%2F%2F127.0.0.1%3A8000%2Fmyaudio.wav">
 </script>
 </body>
 </html>
