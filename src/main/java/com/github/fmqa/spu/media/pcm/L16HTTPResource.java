@@ -15,8 +15,7 @@ import static java.net.http.HttpResponse.BodyHandlers;
  */
 public record L16HTTPResource(HttpClient client, L16Resource resource) {
     public static L16HTTPResource from(HttpClient client, URI uri) throws IOException, InterruptedException {
-        final var l16 = L16Resource.from(client, uri);
-        return l16 == null ? null : new L16HTTPResource(client, l16);
+        return new L16HTTPResource(client, L16Resource.from(client, uri));
     }
 
     /**

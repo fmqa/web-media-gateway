@@ -15,8 +15,7 @@ import java.util.List;
  */
 public record FFL16Input(L16HTTPResource resource) implements FFInputable {
     public static FFL16Input from(HttpClient client, URI uri) throws IOException, InterruptedException {
-        final var l16http = L16HTTPResource.from(client, uri);
-        return l16http == null ? null : new FFL16Input(l16http);
+        return new FFL16Input(L16HTTPResource.from(client, uri));
     }
 
     @Override

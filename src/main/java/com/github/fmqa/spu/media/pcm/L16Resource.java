@@ -12,6 +12,7 @@ import java.util.Locale;
 
 import static java.net.http.HttpRequest.BodyPublishers;
 import static java.net.http.HttpResponse.BodyHandlers;
+import org.springframework.http.InvalidMediaTypeException;
 
 /**
  * RFC2586 (audio/l16) audio resource.
@@ -40,16 +41,18 @@ public record L16Resource(HttpRequest request, L16Format format, long bytes) {
                 .build();
 
         final var response = client.send(request, BodyHandlers.discarding());
+        
         if (response.statusCode() == 405 && "HEAD".equals(method)) {
             return method(client, "GET", uri);
         }
+        
         if (response.statusCode() != 200 && response.statusCode() != 206) {
-            return null;
+            throw new L16ClientException(method + " " + uri + " returned status code: " + response.statusCode());
         }
 
         final var format = response.headers().firstValue("Content-Type").map(L16Format::from).orElse(null);
         if (format == null) {
-            return null;
+            throw new L16ClientException("No Content-Type header found in response for: " + method + " " + uri);
         }
 
         var length = response
@@ -74,8 +77,8 @@ public record L16Resource(HttpRequest request, L16Format format, long bytes) {
      * @param uri The URI referencing this resource
      * @param contentType The audio/l16 content type of the resource
      * @param bytes The size of the resource in bytes, or {@code -1} if unknown
-     * @return An audio/l16 resource with the given parameters, or {@code null} if {@code contentType} is not compatible with
-     * audio/l16
+     * @return An audio/l16 resource with the given parameters
+     * @throws InvalidL16FormatException if the given content type is not a valid audio/l16 media type
      */
     public static L16Resource from(URI uri, MediaType contentType, long bytes) {
         return new L16Resource(get(uri), L16Format.from(contentType), bytes);
@@ -88,10 +91,12 @@ public record L16Resource(HttpRequest request, L16Format format, long bytes) {
      * the URI. If the HEAD method is not supported by the URI, a GET request will be performed as a fallback.
      * @param client The client to use for issuing the probing request
      * @param uri The URI referencing the audio/l16 resource
-     * @return An audio/l16 resource backed by the given URI, or {@code null} if the resource referenced by the given
-     * URI is not an audio/l16 resource
+     * @return An audio/l16 resource backed by the given URI
      * @throws IOException If an I/O error occurs while probing resource parameters
+     * @throws L16ClientException if a client error occurs while probing the resource
      * @throws InterruptedException If the probing process has been interrupted
+     * @throws InvalidL16FormatException if the resource's content type is not a valid audio/l16 media type
+     * @throws InvalidMediaTypeException if the resource's content type couldn't be parsed
      */
     public static L16Resource from(HttpClient client, URI uri) throws IOException, InterruptedException {
         return method(client, "HEAD", uri);

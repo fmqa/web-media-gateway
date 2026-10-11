@@ -14,10 +14,10 @@ public record L16Format(int rate, int channels) {
     
     public L16Format {
         if (rate <= 0) {
-            throw new IllegalArgumentException("Invalid audio/l16 sampling rate: " + rate);
+            throw new InvalidL16FormatException("Invalid audio/l16 sampling rate: " + rate);
         }
         if (channels <= 0) {
-            throw new IllegalArgumentException("Invalid audio/l16 channel count: " + channels);
+            throw new InvalidL16FormatException("Invalid audio/l16 channel count: " + channels);
         }
     }
     
@@ -29,19 +29,27 @@ public record L16Format(int rate, int channels) {
      */
     public static L16Format from(MediaType content) {
         if (!AUDIO_L16.isCompatibleWith(content)) {
-            throw new IllegalArgumentException("Invalid audio/l16 media: " + content);
+            throw new InvalidL16FormatException("Invalid audio/l16 media: " + content);
         }
         
         int rate = 8000, channels = 1;
         
         String value = content.getParameter("rate");
         if (value != null) {
-            rate = Integer.parseInt(value);
+            try {
+                rate = Integer.parseInt(value);
+            } catch (NumberFormatException ex) {
+                throw new InvalidL16FormatException(ex);
+            }
         }
         
         value = content.getParameter("channels");
         if (value != null) {
-            channels = Integer.parseInt(value);
+            try {
+                channels = Integer.parseInt(value);
+            } catch (NumberFormatException ex) {
+                throw new InvalidL16FormatException(ex);
+            }
         }
         
         return new L16Format(rate, channels);
