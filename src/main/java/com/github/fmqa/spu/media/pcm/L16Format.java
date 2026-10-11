@@ -25,7 +25,7 @@ public record L16Format(int rate, int channels) {
      * Creates an l16 audio format from the given {@code audio/l16} media type.
      * @param content media type to parse
      * @return an l16 (RFC2586) audio format
-     * @throws IllegalArgumentException if the given media type is not audio/l16 or if any parameters are invalid
+     * @throws InvalidL16FormatException if the given media type is not audio/l16 or if any parameters are invalid
      */
     public static L16Format from(MediaType content) {
         if (!AUDIO_L16.isCompatibleWith(content)) {
@@ -59,7 +59,7 @@ public record L16Format(int rate, int channels) {
      * Creates an l16 audio format from the given {@code audio/l16} media type string.
      * @param content media type string to parse
      * @return an l16 (RFC2586) audio format
-     * @throws IllegalArgumentException if the given media type is not audio/l16 or if any parameters are invalid
+     * @throws InvalidL16FormatException if the given media type is not audio/l16 or if any parameters are invalid
      */
     public static L16Format from(String content) {
         return from(MediaType.parseMediaType(content));
