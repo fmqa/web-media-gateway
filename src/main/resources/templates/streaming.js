@@ -352,7 +352,7 @@
     }
 
     // Handle seeking via media element controls
-    mediaElement.addEventListener('seeking', () => {
+    mediaElement.onseeking = () => {
         if (isProgrammaticSeek) {
             isProgrammaticSeek = false;
             return;
@@ -366,5 +366,5 @@
         }
 
         executeSeek(targetTime);
-    });
+    };
 })(/*[[${streamUrl}]]*/ '', /*[[${elementSelector}]]*/ 'audio', /*[[${mediatype}]]*/ '');
