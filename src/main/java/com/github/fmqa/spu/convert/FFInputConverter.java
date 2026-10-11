@@ -5,6 +5,7 @@ import com.github.fmqa.spu.media.ffmpeg.FFL16Input;
 import com.github.fmqa.spu.media.ffmpeg.FFPseudoStreamInput;
 import com.github.fmqa.spu.media.ffmpeg.FFURLInput;
 import com.github.fmqa.spu.media.pcm.InvalidL16FormatException;
+import com.github.fmqa.spu.media.pcm.L16ClientException;
 import com.github.fmqa.spu.media.temporal.Estimator;
 import com.github.fmqa.spu.media.temporal.Estimators;
 import org.springframework.core.convert.converter.Converter;
@@ -50,12 +51,12 @@ public record FFInputConverter(HttpClient client, Estimator estimator) implement
         FFL16Input l16;
         try {
             l16 = FFL16Input.from(client, uri);
+        } catch (L16ClientException | InvalidL16FormatException | InvalidMediaTypeException _) {
+            return probed(new FFURLInput(uri));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         } catch (InterruptedException e) {
             throw new IllegalArgumentException(e);
-        } catch (InvalidL16FormatException | InvalidMediaTypeException _) {
-            return probed(new FFURLInput(uri));
         }
         if (l16 != null) {
             return l16;
