@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 abstract class AbstractMixStreamBuilder {
     private List<? extends FFInputable> sources = Collections.emptyList();
     private Duration start = Duration.ZERO;
-    private Monitorable monitor;
+    private Monitorable monitor = Monitorables.IGNORE;
     
     static Duration estimate(FFInputable ff) {
         try {
@@ -75,19 +75,15 @@ abstract class AbstractMixStreamBuilder {
     }
     
     public void monitor(Monitorable monitorable) {
-        monitor = monitorable;
+        monitor = monitorable == null ? Monitorables.IGNORE : monitorable;
     }
     
     protected void started(long pid, List<String> args) {
-        if (monitor != null) {
-            monitor.started(pid, args);
-        }
+        monitor.started(pid, args);
     }
     
     protected void exited(long pid, int code) {
-        if (monitor != null) {
-            monitor.exited(pid, code);
-        }
+        monitor.exited(pid, code);
     }
     
     private void exited(Process process) {

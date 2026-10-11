@@ -21,7 +21,7 @@ abstract class AbstractMediaStreamBuilder {
     private Duration delay = Duration.ZERO;
     private Duration start = Duration.ZERO;
     private List<Range> ranges = Collections.emptyList();
-    private Monitorable monitor;
+    private Monitorable monitor = Monitorables.IGNORE;
     
     public void input(FFInputable input) {
         source = input;
@@ -82,19 +82,15 @@ abstract class AbstractMediaStreamBuilder {
     }
     
     public void monitor(Monitorable monitorable) {
-        monitor = monitorable;
+        monitor = monitorable == null ? Monitorables.IGNORE : monitorable;
     }
     
     protected void started(long pid, List<String> args) {
-        if (monitor != null) {
-            monitor.started(pid, args);
-        }
+        monitor.started(pid, args);
     }
     
     protected void exited(long pid, int code) {
-        if (monitor != null) {
-            monitor.exited(pid, code);
-        }
+        monitor.exited(pid, code);
     }
     
     private void exited(Process process) {
